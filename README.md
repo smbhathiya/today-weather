@@ -4,7 +4,8 @@ A weather application built with [Next.js](https://nextjs.org/), styled using [T
 
 ## Live Demo
 
-Check out the deployed app [here](https://weather-6ttnn1crj-smbhathiyas-projects.vercel.app/).
+Check out the deployed app <a href="https://weather-6ttnn1crj-smbhathiyas-projects.vercel.app/" target="_blank" rel="noopener noreferrer">here</a>.
+
 
 ## Getting Started
 
