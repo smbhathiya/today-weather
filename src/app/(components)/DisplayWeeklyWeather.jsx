@@ -1,10 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getWeatherData } from "../../../lib/api"; 
+import { getWeatherData } from "../../../lib/api";
 
-function DisplayWeeklyWeather({cityName}) {
+function DisplayWeeklyWeather({ cityName }) {
   const [weatherData, setWeatherData] = useState(null);
-  //const cityName = "Colombo"; 
 
   useEffect(() => {
     getWeatherData(cityName)
@@ -41,7 +40,7 @@ function DisplayWeeklyWeather({cityName}) {
           dayData.reduce((total, item) => total + item.main.temp, 0) /
           dayData.length;
 
-        const mainWeather = dayData[0].weather[0]; 
+        const mainWeather = dayData[0].weather[0];
         return {
           date,
           temp: averageTemp.toFixed(1),
@@ -58,19 +57,25 @@ function DisplayWeeklyWeather({cityName}) {
   const dailyForecast = getDailyForecast(weatherData.list);
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold text-center mb-4">
+    <div className="p-6 bg-white dark:bg-gray-900">
+      <h2 className="text-2xl font-bold text-center mb-4 text-gray-900 dark:text-gray-100">
         7-DAY WEATHER FORECAST FOR {cityName.toUpperCase()}
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
         {dailyForecast.map((weather, index) => (
           <div
-            className="p-6 bg-mainColor text-center cursor-pointer hover:bg-mainColorHover hover:scale-110 duration-300 rounded-lg"
+            className="p-4 bg-mainColor dark:bg-gray-800 text-center pt-10 pb-10 cursor-pointer hover:bg-mainColorHover dark:hover:bg-gray-700 hover:scale-110 duration-300 rounded-lg"
             key={index}
           >
-            <p className="text-lg font-bold">{weather.date}</p>
-            <p className="text-3xl font-bold">{weather.temp}°C</p>
-            <p className="text-lg">{weather.description}</p>
+            <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
+              {weather.date}
+            </p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+              {weather.temp}°C
+            </p>
+            <p className="text-lg text-gray-900 dark:text-gray-300">
+              {weather.description}
+            </p>
             <img
               src={`http://openweathermap.org/img/wn/${weather.icon}@2x.png`}
               alt="Weather icon"

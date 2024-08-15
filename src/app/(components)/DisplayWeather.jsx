@@ -5,12 +5,10 @@ import {
   IoChevronBackCircleOutline,
   IoChevronForwardCircleOutline,
 } from "react-icons/io5";
-import SearchBox from "./SearchBox";
 
-function DisplayWeather({cityName}) {
+function DisplayWeather({ cityName }) {
   const [weatherData, setWeatherData] = useState(null);
-  //const cityName = "Colombo"; 
-  const scrollRef = useRef(null); 
+  const scrollRef = useRef(null);
 
   useEffect(() => {
     getWeatherData(cityName)
@@ -51,8 +49,8 @@ function DisplayWeather({cityName}) {
   const filteredData = filterWeatherData(weatherData.list);
 
   return (
-    <div className="p-6 relative">
-      <h1 className="text-2xl font-bold text-center mb-4">
+    <div className="p-6 relative bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      <h1 className="text-4xl font-bold text-center mb-4">
         WEATHER IN {cityName.toUpperCase()} TODAY
       </h1>
 
@@ -60,11 +58,11 @@ function DisplayWeather({cityName}) {
         {/* Left arrow */}
         <button
           onClick={() => scroll("left")}
-          className="absolute left-0 z-10 mx-4  "
+          className="absolute left-0 z-10 mx-4 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md hover:bg-gray-200 dark:hover:bg-gray-700"
         >
           <IoChevronBackCircleOutline
             size={50}
-            className="text-black rounded-full hover:scale-125 duration-300"
+            className="text-gray-900 dark:text-gray-100"
           />
         </button>
 
@@ -82,7 +80,7 @@ function DisplayWeather({cityName}) {
 
             return (
               <div
-                className="p-10 bg-mainColor text-center cursor-pointer hover:bg-mainColorHover hover:scale-110 duration-300 rounded-lg min-w-[250px]"
+                className="p-10 bg-mainColor dark:bg-gray-700 text-center cursor-pointer hover:bg-mainColorHover dark:hover:bg-gray-600 hover:scale-110 duration-300 rounded-lg min-w-[250px]"
                 key={index}
               >
                 <p className="text-sm font-bold">{weatherDateStr}</p>
@@ -102,11 +100,11 @@ function DisplayWeather({cityName}) {
         {/* Right arrow */}
         <button
           onClick={() => scroll("right")}
-          className="absolute right-0 z-10 mr-4 "
+          className="absolute right-0 z-10 mr-4 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md hover:bg-gray-200 dark:hover:bg-gray-700"
         >
           <IoChevronForwardCircleOutline
             size={50}
-            className="text-black rounded-full hover:scale-125 duration-300"
+            className="text-gray-900 dark:text-gray-100"
           />
         </button>
       </div>
