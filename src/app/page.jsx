@@ -1,13 +1,9 @@
-import DisplayWeather from "./(components)/DisplayWeather";
-import DisplayWeeklyWeather from "./(components)/DisplayWeeklyWeather";
-import Navbar from "./(components)/Navbar";
+import Home from "./(components)/home";
 
-export default function home() {
+export default function Page() {
   return (
     <>
-      <Navbar />
-      <DisplayWeather />
-      <DisplayWeeklyWeather />
+    <Home/>
     </>
   );
 }

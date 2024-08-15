@@ -5,11 +5,12 @@ import {
   IoChevronBackCircleOutline,
   IoChevronForwardCircleOutline,
 } from "react-icons/io5";
+import SearchBox from "./SearchBox";
 
-function DisplayWeather() {
+function DisplayWeather({cityName}) {
   const [weatherData, setWeatherData] = useState(null);
-  const cityName = "Colombo"; // Default city name
-  const scrollRef = useRef(null); // Reference to the scrollable container
+  //const cityName = "Colombo"; 
+  const scrollRef = useRef(null); 
 
   useEffect(() => {
     getWeatherData(cityName)
@@ -19,19 +20,16 @@ function DisplayWeather() {
       .catch((error) => console.error("Error fetching weather data:", error));
   }, [cityName]);
 
-  // Function to filter weather data to the previous 12 hours and next 12 hours
   const filterWeatherData = (data) => {
     const now = new Date();
     const twelveHoursAgo = new Date(now.getTime() - 12 * 60 * 60 * 1000);
     const twelveHoursLater = new Date(now.getTime() + 12 * 60 * 60 * 1000);
 
-    // Filter the data to include only those within the desired time range
     const filteredData = data.filter((item) => {
       const itemDate = new Date(item.dt_txt);
       return itemDate >= twelveHoursAgo && itemDate <= twelveHoursLater;
     });
 
-    // Sort the filtered data chronologically
     const sortedFilteredData = filteredData.sort(
       (a, b) => new Date(a.dt_txt) - new Date(b.dt_txt)
     );
@@ -39,7 +37,6 @@ function DisplayWeather() {
     return sortedFilteredData;
   };
 
-  // Function to scroll the weather items
   const scroll = (direction) => {
     const { current } = scrollRef;
     if (direction === "left") {
@@ -55,9 +52,9 @@ function DisplayWeather() {
 
   return (
     <div className="p-6 relative">
-      <h2 className="text-2xl font-bold text-center mb-4">
+      <h1 className="text-2xl font-bold text-center mb-4">
         WEATHER IN {cityName.toUpperCase()} TODAY
-      </h2>
+      </h1>
 
       <div className="flex items-center justify-center">
         {/* Left arrow */}

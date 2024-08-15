@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getWeatherData } from "../../../lib/api"; // Adjust the import path as necessary
+import { getWeatherData } from "../../../lib/api"; 
 
-function DisplayWeeklyWeather() {
+function DisplayWeeklyWeather({cityName}) {
   const [weatherData, setWeatherData] = useState(null);
-  const cityName = "Colombo"; // Default city name
+  //const cityName = "Colombo"; 
 
   useEffect(() => {
     getWeatherData(cityName)
@@ -14,14 +14,13 @@ function DisplayWeeklyWeather() {
       .catch((error) => console.error("Error fetching weather data:", error));
   }, [cityName]);
 
-  // Function to group weather data by day and return the forecast for the next 7 days
   const getDailyForecast = (data) => {
     const dailyData = {};
 
     data.forEach((item) => {
       const date = new Date(item.dt_txt);
       const dateString = date.toLocaleDateString("en-GB", {
-        weekday: "long", // Show day of the week
+        weekday: "long",
         day: "numeric",
         month: "long",
       });
@@ -33,7 +32,6 @@ function DisplayWeeklyWeather() {
       dailyData[dateString].push(item);
     });
 
-    // Extract the forecast for each day (taking the average temperature and the most frequent weather description)
     const dailyForecast = Object.keys(dailyData)
       .slice(0, 7)
       .map((date) => {
@@ -43,11 +41,10 @@ function DisplayWeeklyWeather() {
           dayData.reduce((total, item) => total + item.main.temp, 0) /
           dayData.length;
 
-        const mainWeather = dayData[0].weather[0]; // Using the first weather condition of the day for simplicity
-
+        const mainWeather = dayData[0].weather[0]; 
         return {
           date,
-          temp: averageTemp.toFixed(1), // Average temperature rounded to 1 decimal
+          temp: averageTemp.toFixed(1),
           description: mainWeather.description,
           icon: mainWeather.icon,
         };
