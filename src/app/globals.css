@@ -2,4 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* Global styles */
+:root {
+    --scrollbar-thumb-color: #888;
+    --scrollbar-track-color: #f1f1f1;
+  }
+  
+  .dark {
+    --scrollbar-thumb-color: #555;
+    --scrollbar-track-color: #333;
+  }
+  
+  /* Scrollbar styles */
+  .scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+  }
+  
+  .scrollbar::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  .scrollbar::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-color);
+  }
+  
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+  }
+  

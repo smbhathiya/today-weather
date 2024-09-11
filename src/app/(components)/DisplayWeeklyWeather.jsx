@@ -1,16 +1,65 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getWeatherData } from "../../../lib/api";
+import { getWeatherData, getWeatherByLocation } from "../../../lib/api";
 
 function DisplayWeeklyWeather({ cityName }) {
   const [weatherData, setWeatherData] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getWeatherData(cityName)
-      .then((response) => {
+    const fetchWeatherData = async (city) => {
+      try {
+        const response = await getWeatherData(city);
+        if (response.data && response.data.list.length > 0) {
+          setWeatherData(response.data);
+          setError(null); // Clear any previous errors
+        } else {
+          setError("City not found. Showing nearest location...");
+          getLocation(); // Fetch weather by location if city is not found
+        }
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+        setError("Error fetching weather data. Showing nearest location...");
+        getLocation(); // Fallback to location-based weather data
+      }
+    };
+
+    const fetchWeatherByLocation = async (latitude, longitude) => {
+      try {
+        const response = await getWeatherByLocation(latitude, longitude);
         setWeatherData(response.data);
-      })
-      .catch((error) => console.error("Error fetching weather data:", error));
+        setError(null); // Clear any previous errors
+      } catch (error) {
+        console.error("Error fetching weather data by coordinates:", error);
+        setError("Unable to fetch weather data by location.");
+      }
+    };
+
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            fetchWeatherByLocation(latitude, longitude);
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+            setError("Geolocation not available. Showing default city.");
+            fetchWeatherData(cityName || "London"); // Fallback to a default city if geolocation fails
+          }
+        );
+      } else {
+        setError("Geolocation not supported. Showing default city.");
+        fetchWeatherData(cityName || "London"); // Fallback to a default city if geolocation is not supported
+      }
+    };
+
+    if (cityName) {
+      fetchWeatherData(cityName); // Fetch weather data for the specified city
+    } else {
+      getLocation(); // Fetch weather data based on current location if no city is specified
+    }
+
   }, [cityName]);
 
   const getDailyForecast = (data) => {
@@ -52,14 +101,20 @@ function DisplayWeeklyWeather({ cityName }) {
     return dailyForecast;
   };
 
-  if (!weatherData) return <p>Loading...</p>;
+  if (error) {
+    return <p className="text-center text-red-500">{error}</p>;
+  }
+
+  if (!weatherData) {
+    return <p className="text-center">Loading...</p>;
+  }
 
   const dailyForecast = getDailyForecast(weatherData.list);
 
   return (
     <div className="p-6 bg-white dark:bg-gray-900">
       <h2 className="text-2xl font-bold text-center mb-4 text-gray-900 dark:text-gray-100">
-        7-DAY WEATHER FORECAST FOR {cityName.toUpperCase()}
+        7-DAY WEATHER FORECAST FOR {cityName ? cityName.toUpperCase() : "CURRENT LOCATION"}
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
         {dailyForecast.map((weather, index) => (

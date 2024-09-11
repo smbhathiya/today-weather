@@ -19,8 +19,13 @@ module.exports = {
         darkPrimaryColor: "#63B3ED",
         darkPrimaryColorHover: "#4299E1",
         darkTextColor: "#FFFFFF",
+        'scrollbar-thumb': 'var(--scrollbar-thumb-color)',
+        'scrollbar-track': 'var(--scrollbar-track-color)',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+  ],
+  
 };
