@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import Image from "next/image";
 
 interface ForecastItem {
   date: string;
@@ -82,7 +83,7 @@ const ForecastList: React.FC<ForecastListProps> = ({
                       minute: "2-digit",
                     })}
                   </p>
-                  <img
+                  <Image
                     src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
                     alt={item.description}
                     className="w-16 h-16"
