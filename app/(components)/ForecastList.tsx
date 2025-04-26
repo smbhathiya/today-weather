@@ -86,7 +86,8 @@ const ForecastList: React.FC<ForecastListProps> = ({
                   <Image
                     src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
                     alt={item.description}
-                    className="w-16 h-16"
+                    width={64}
+                    height={64}
                   />
                   <p className="text-lg font-semibold">{item.temperature}°C</p>
                   <p className="capitalize text-sm text-foreground">

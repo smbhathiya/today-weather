@@ -4,6 +4,28 @@ const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 const weatherUrl = "https://api.openweathermap.org/data/2.5/weather";
 const forecastUrl = "https://api.openweathermap.org/data/2.5/forecast";
 
+// Define types for the forecast data
+interface Weather {
+  description: string;
+  icon: string;
+}
+
+interface Main {
+  temp: number;
+  humidity: number;
+}
+
+interface Wind {
+  speed: number;
+}
+
+interface ForecastItem {
+  dt_txt: string;
+  main: Main;
+  weather: Weather[];
+  wind: Wind;
+}
+
 export async function getCurrentWeather(city: string) {
   try {
     const response = await axios.get(weatherUrl, {
@@ -43,11 +65,11 @@ export async function getTodayForecast(city: string) {
       },
     });
 
-    const today = new Date().toISOString().split("T")[0]; // "2025-04-26"
+    const today = new Date().toISOString().split("T")[0];
 
     const todayForecast = response.data.list
-      .filter((item: any) => item.dt_txt.startsWith(today))
-      .map((item: any) => ({
+      .filter((item: ForecastItem) => item.dt_txt.startsWith(today))
+      .map((item: ForecastItem) => ({
         date: item.dt_txt,
         temperature: item.main.temp,
         description: item.weather[0].description,
@@ -74,8 +96,8 @@ export async function getNextFiveDaysForecast(city: string) {
     const today = new Date().toISOString().split("T")[0];
 
     const futureForecast = response.data.list
-      .filter((item: any) => !item.dt_txt.startsWith(today))
-      .map((item: any) => ({
+      .filter((item: ForecastItem) => !item.dt_txt.startsWith(today))
+      .map((item: ForecastItem) => ({
         date: item.dt_txt,
         temperature: item.main.temp,
         description: item.weather[0].description,

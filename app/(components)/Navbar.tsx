@@ -14,7 +14,13 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
     <header className="w-full  bg-background">
       <div className="container flex flex-col items-center justify-between gap-4 p-4 sm:flex-row">
         <div className="flex items-center">
-          <Image src="/cloudy.png" alt="Cloudy Icon" className="w-8 h-8 mr-3" />
+          <Image
+            src="/cloudy.png"
+            alt="Cloudy Icon"
+            className="mr-3"
+            width={32}
+            height={32}
+          />
           <h1 className="text-xl font-bold ">TODAY WEATHER</h1>
         </div>
         <nav className="flex items-center gap-4 sm:flex-row sm:gap-6">

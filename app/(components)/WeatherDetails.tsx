@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import Image from "next/image";
 
 interface WeatherDetailsProps {
   cityName?: string;
@@ -45,10 +46,11 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({
           </>
         ) : (
           <>
-            <img
+            <Image
               src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
-              alt={description}
-              className="w-16 h-16"
+              width={100}
+              height={100}
+              alt={"Weather Icon"}
             />
             <div>
               <p className="text-xl">{temperature}°C</p>
