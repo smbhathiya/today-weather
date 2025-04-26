@@ -15,7 +15,7 @@ function Footer() {
             Powered by OpenWeather
           </a>
           <a
-            href="https://github.com/"
+            href="https://github.com/smbhathiya/today-weather.git"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:underline"
