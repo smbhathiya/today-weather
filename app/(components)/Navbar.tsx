@@ -10,16 +10,14 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
   return (
-    <header className="w-full border-b bg-background">
+    <header className="w-full  bg-background">
       <div className="container flex flex-col items-center justify-between gap-4 p-4 sm:flex-row">
         <div className="flex items-center">
           <img src="/cloudy.png" alt="Cloudy Icon" className="w-8 h-8 mr-3" />
-          <h1 className="text-3xl font-bold text-primaryColor">
-            TODAY WEATHER
-          </h1>
+          <h1 className="text-xl font-bold ">TODAY WEATHER</h1>
         </div>
-        <nav className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
-          <SearchBox onSearch={onSearch} /> 
+        <nav className="flex items-center gap-4 sm:flex-row sm:gap-6">
+          <SearchBox onSearch={onSearch} />
           <ModeToggle />
         </nav>
       </div>
