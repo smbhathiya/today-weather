@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { getCitySuggestions } from "@/lib/city";
 
 interface CitySuggestion {
@@ -30,7 +29,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
       }
 
       try {
-        const cities = await getCitySuggestions(inputValue,5);
+        const cities = await getCitySuggestions(inputValue, 5);
         setSuggestions(cities);
       } catch (error) {
         console.error("Error fetching city suggestions:", error);
@@ -83,16 +82,14 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           placeholder="Enter city name"
-          className="dark:bg-gray-800 dark:text-white"
         />
-        <Button onClick={handleSearch}>Search</Button>
       </div>
 
       {suggestions.length > 0 && (
         <ul className="absolute z-10 mt-2 w-full rounded-md border bg-popover text-popover-foreground shadow-md dark:bg-gray-800 max-h-60 overflow-y-auto">
           {suggestions.map((city, index) => (
             <li
-              key={`${city.lat}-${city.lon}`} 
+              key={`${city.lat}-${city.lon}`}
               onClick={() => handleSuggestionClick(city)}
               className={`cursor-pointer px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground ${
                 index === selectedIndex ? "bg-muted text-muted-foreground" : ""
