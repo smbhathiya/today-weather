@@ -20,7 +20,7 @@ interface ForecastListProps {
 const ForecastList: React.FC<ForecastListProps> = ({
   title,
   forecastData,
-  isLoading,
+  isLoading = false,
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -30,6 +30,14 @@ const ForecastList: React.FC<ForecastListProps> = ({
       scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
+
+  // Show skeleton state either when explicitly loading OR on initial page load
+  const showSkeletons = isLoading || (!forecastData && window !== undefined);
+
+  // Only hide the component completely when we know for sure there's no data and we're not loading
+  if (!showSkeletons && (!forecastData || forecastData.length === 0)) {
+    return null;
+  }
 
   return (
     <Card className="mt-6">
@@ -45,27 +53,27 @@ const ForecastList: React.FC<ForecastListProps> = ({
         </div>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="flex items-center justify-center min-h-[250px]">
         <div
           ref={scrollRef}
-          className="overflow-x-auto flex space-x-4 py-2 scroll-smooth scrollbar-hide"
+          className="overflow-x-auto flex space-x-4 py-2 scroll-smooth scrollbar-hide w-full"
         >
-          {isLoading
+          {showSkeletons
             ? Array.from({ length: 5 }).map((_, index) => (
                 <div
                   key={index}
-                  className="min-w-[220px] min-h-[220px] rounded-2xl bg-muted p-4 flex-shrink-0 text-center space-y-2"
+                  className="min-w-[220px] min-h-[220px] rounded-2xl bg-muted p-4 flex-shrink-0 flex flex-col items-center justify-center space-y-4"
                 >
-                  <Skeleton className="h-4 w-20 mx-auto" />
-                  <Skeleton className="h-16 w-16 mx-auto rounded-full" />
-                  <Skeleton className="h-5 w-14 mx-auto" />
-                  <Skeleton className="h-4 w-24 mx-auto" />
+                  <Skeleton className="h-4 w-20" />
+                  <Skeleton className="h-16 w-16 rounded-full" />
+                  <Skeleton className="h-5 w-14" />
+                  <Skeleton className="h-4 w-24" />
                 </div>
               ))
             : forecastData?.map((item, index) => (
                 <div
                   key={index}
-                  className="min-w-[220px] min-h-[220px] rounded-2xl bg-muted p-4 flex-shrink-0 text-center justify-center shadow-sm transition hover:shadow-md"
+                  className="min-w-[220px] min-h-[220px] rounded-2xl bg-muted p-4 flex-shrink-0 flex flex-col items-center justify-center space-y-2 shadow-sm transition-all duration-300 ease-in-out hover:scale-105 hover:bg-primary/10 hover:shadow-md"
                 >
                   <p className="text-sm text-muted-foreground">
                     {new Date(item.date).toLocaleString(undefined, {
@@ -77,7 +85,7 @@ const ForecastList: React.FC<ForecastListProps> = ({
                   <img
                     src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
                     alt={item.description}
-                    className="w-16 h-16 mx-auto"
+                    className="w-16 h-16"
                   />
                   <p className="text-lg font-semibold">{item.temperature}°C</p>
                   <p className="capitalize text-sm text-foreground">
