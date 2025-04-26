@@ -92,7 +92,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
         <ul className="absolute z-10 mt-2 w-full rounded-md border bg-popover text-popover-foreground shadow-md dark:bg-gray-800 max-h-60 overflow-y-auto">
           {suggestions.map((city, index) => (
             <li
-              key={`${city.lat}-${city.lon}`} // Unique key using lat-lon
+              key={`${city.lat}-${city.lon}`} 
               onClick={() => handleSuggestionClick(city)}
               className={`cursor-pointer px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground ${
                 index === selectedIndex ? "bg-muted text-muted-foreground" : ""
