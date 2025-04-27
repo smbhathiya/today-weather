@@ -8,6 +8,7 @@ import { getCurrentWeather, getTodayForecast, getNextFiveDaysForecast } from "@/
 import { useUserLocation } from "./hooks/useUserLocation";
 import { getCityByCoords } from "@/lib/city";
 import Footer from "./(components)/Footer";
+import NextFiveDaysForecastList from "./(components)/NextFiveDaysForecastList";
 
 interface WeatherData {
   cityName: string;
@@ -92,7 +93,7 @@ export default function Home() {
       />
 
       <ForecastList title="Today's Forecast" forecastData={todayForecast} isLoading={isLoading} />
-      <ForecastList title="Next 5 Days Forecast" forecastData={fiveDayForecast} isLoading={isLoading} />
+      <NextFiveDaysForecastList title="Next 5 Days Forecast" forecastData={fiveDayForecast} isLoading={isLoading} />
 
       <Footer />
     </div>
