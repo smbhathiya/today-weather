@@ -21,6 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearch }) => {
             width={32}
             height={32}
           />
+          
           <h1 className="text-xl font-bold ">TODAY WEATHER</h1>
         </div>
         <nav className="flex items-center gap-4 sm:flex-row sm:gap-6">
